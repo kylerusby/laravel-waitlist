@@ -1,6 +1,6 @@
 <?php
 
-namespace Kyle Rusby\LaravelWaitlist\Commands;
+namespace KyleRusby\LaravelWaitlist\Commands;
 
 use Illuminate\Console\Command;
 

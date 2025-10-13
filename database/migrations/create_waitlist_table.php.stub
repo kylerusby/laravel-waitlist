@@ -8,11 +8,9 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::create('laravel_waitlist_table', function (Blueprint $table) {
+        Schema::create('waitlist', function (Blueprint $table) {
             $table->id();
-
-            // add fields
-
+            $table->string('email')->unique();
             $table->timestamps();
         });
     }

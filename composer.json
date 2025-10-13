@@ -34,13 +34,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Kyle Rusby\\LaravelWaitlist\\": "src/",
-            "Kyle Rusby\\LaravelWaitlist\\Database\\Factories\\": "database/factories/"
+            "KyleRusby\\LaravelWaitlist\\": "src/",
+            "KyleRusby\\LaravelWaitlist\\Database\\Factories\\": "database/factories/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Kyle Rusby\\LaravelWaitlist\\Tests\\": "tests/",
+            "KyleRusby\\LaravelWaitlist\\Tests\\": "tests/",
             "Workbench\\App\\": "workbench/app/"
         }
     },
@@ -62,10 +62,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Kyle Rusby\\LaravelWaitlist\\LaravelWaitlistServiceProvider"
+                "KyleRusby\\LaravelWaitlist\\LaravelWaitlistServiceProvider"
             ],
             "aliases": {
-                "LaravelWaitlist": "Kyle Rusby\\LaravelWaitlist\\Facades\\LaravelWaitlist"
+                "LaravelWaitlist": "KyleRusby\\LaravelWaitlist\\Facades\\LaravelWaitlist"
             }
         }
     },

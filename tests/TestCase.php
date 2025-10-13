@@ -1,10 +1,10 @@
 <?php
 
-namespace Kyle Rusby\LaravelWaitlist\Tests;
+namespace KyleRusby\LaravelWaitlist\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use Kyle Rusby\LaravelWaitlist\LaravelWaitlistServiceProvider;
+use KyleRusby\LaravelWaitlist\LaravelWaitlistServiceProvider;
 
 class TestCase extends Orchestra
 {
@@ -13,7 +13,7 @@ class TestCase extends Orchestra
         parent::setUp();
 
         Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'Kyle Rusby\\LaravelWaitlist\\Database\\Factories\\'.class_basename($modelName).'Factory'
+            fn (string $modelName) => 'KyleRusby\\LaravelWaitlist\\Database\\Factories\\'.class_basename($modelName).'Factory'
         );
     }
 

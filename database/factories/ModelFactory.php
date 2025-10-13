@@ -1,6 +1,6 @@
 <?php
 
-namespace Kyle Rusby\LaravelWaitlist\Database\Factories;
+namespace KyleRusby\LaravelWaitlist\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 

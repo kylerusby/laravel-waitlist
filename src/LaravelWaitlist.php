@@ -1,5 +1,5 @@
 <?php
 
-namespace Kyle Rusby\LaravelWaitlist;
+namespace KyleRusby\LaravelWaitlist;
 
 class LaravelWaitlist {}

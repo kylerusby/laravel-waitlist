@@ -1,10 +1,10 @@
 <?php
 
-namespace Kyle Rusby\LaravelWaitlist;
+namespace KyleRusby\LaravelWaitlist;
 
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Kyle Rusby\LaravelWaitlist\Commands\LaravelWaitlistCommand;
+use KyleRusby\LaravelWaitlist\Commands\LaravelWaitlistCommand;
 
 class LaravelWaitlistServiceProvider extends PackageServiceProvider
 {
@@ -19,7 +19,20 @@ class LaravelWaitlistServiceProvider extends PackageServiceProvider
             ->name('laravel-waitlist')
             ->hasConfigFile()
             ->hasViews()
-            ->hasMigration('create_laravel_waitlist_table')
+            ->hasMigration('create_waitlist_table')
             ->hasCommand(LaravelWaitlistCommand::class);
+    }
+
+    public function packageBooted(): void
+    {
+        // Only register routes if enabled in config
+        if (config('waitlist.enabled', true) && config('waitlist.routes.enabled', true)) {
+            $this->registerRoutes();
+        }
+    }
+
+    protected function registerRoutes(): void
+    {
+        $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
     }
 }
