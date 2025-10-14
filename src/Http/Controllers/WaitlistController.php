@@ -13,7 +13,7 @@ class WaitlistController extends Controller
      */
     public function store(StoreWaitlistRequest $request)
     {
-        Waitlist::create([
+        Waitlist::firstOrCreate([
             'email' => $request->validated('email'),
         ]);
 

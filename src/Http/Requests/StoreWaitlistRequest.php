@@ -25,7 +25,6 @@ class StoreWaitlistRequest extends FormRequest
             'email' => [
                 'required',
                 'email',
-                'unique:waitlist,email',
             ],
         ];
     }
@@ -40,7 +39,6 @@ class StoreWaitlistRequest extends FormRequest
         return [
             'email.required' => 'Please provide an email address.',
             'email.email' => 'Please provide a valid email address.',
-            'email.unique' => 'This email is already on the waitlist.',
         ];
     }
 }
