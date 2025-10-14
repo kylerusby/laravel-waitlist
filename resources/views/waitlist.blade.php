@@ -62,6 +62,11 @@
                                 {{ config('waitlist.button_text') }}
                             </button>
                         </div>
+
+                        <!-- Cloudflare Turnstile -->
+                        <div class="mt-4 flex justify-center">
+                            <x-laravel-waitlist::turnstile />
+                        </div>
                     </form>
 
                     @if(session('success'))

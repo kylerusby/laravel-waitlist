@@ -3,6 +3,7 @@
 namespace KyleRusby\LaravelWaitlist\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use KyleRusby\LaravelWaitlist\Rules\TurnstileRule;
 
 class StoreWaitlistRequest extends FormRequest
 {
@@ -21,12 +22,22 @@ class StoreWaitlistRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $rules = [
             'email' => [
                 'required',
                 'email',
             ],
         ];
+
+        // Add Turnstile validation if enabled
+        if (config('waitlist.turnstile.enabled', false)) {
+            $rules['cf-turnstile-response'] = [
+                'required',
+                new TurnstileRule($this->ip()),
+            ];
+        }
+
+        return $rules;
     }
 
     /**
@@ -39,6 +50,7 @@ class StoreWaitlistRequest extends FormRequest
         return [
             'email.required' => 'Please provide an email address.',
             'email.email' => 'Please provide a valid email address.',
+            'cf-turnstile-response.required' => 'Please complete the security challenge.',
         ];
     }
 }

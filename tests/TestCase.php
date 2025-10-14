@@ -27,11 +27,12 @@ class TestCase extends Orchestra
     public function getEnvironmentSetUp($app)
     {
         config()->set('database.default', 'testing');
+        // Set an application key to satisfy encryption requirements during tests
+        config()->set('app.key', 'base64:'.base64_encode(random_bytes(32)));
+        config()->set('waitlist.enabled', true);
+        config()->set('waitlist.routes.enabled', true);
 
-        /*
-         foreach (\Illuminate\Support\Facades\File::allFiles(__DIR__ . '/../database/migrations') as $migration) {
-            (include $migration->getRealPath())->up();
-         }
-         */
+        $migration = include __DIR__.'/../database/migrations/create_waitlist_table.php.stub';
+        $migration->up();
     }
 }

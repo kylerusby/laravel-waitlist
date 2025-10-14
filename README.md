@@ -248,6 +248,105 @@ return [
 ];
 ```
 
+## Cloudflare Turnstile (Optional)
+
+Protect your waitlist form from bots using Cloudflare Turnstile. This package ships with a Blade component and server-side validation ready to use.
+
+### 1) Enable and Configure
+
+Add the following to your `.env`:
+
+```env
+CLOUDFLARE_TURNSTILE_ENABLED=true
+CLOUDFLARE_SITE_KEY=your-site-key
+CLOUDFLARE_TURNSTILE_SECRET=your-secret-key
+
+# Optional (defaults shown)
+CLOUDFLARE_TURNSTILE_THEME=light
+CLOUDFLARE_TURNSTILE_SIZE=normal
+CLOUDFLARE_TURNSTILE_CALLBACK=onSuccess
+```
+
+The config lives under `config/waitlist.php` → `turnstile`.
+
+### 2) Use with the Package’s Built-in View
+
+If you’re using the provided stub at `GET /waitlist`, Turnstile is already included. Just set your `.env` values above and you’re done.
+
+### 3) Include in Your Own Blade View
+
+If you aren’t using the provided stub, you can include the component inside your form:
+
+```blade
+<form method="POST" action="{{ route('waitlist.store') }}">
+    @csrf
+
+    <input type="email" name="email" required>
+
+    {{-- Cloudflare Turnstile --}}
+    <x-laravel-waitlist::turnstile />
+
+    <button type="submit">Join Waitlist</button>
+</form>
+```
+
+The component automatically:
+- Loads the Turnstile script
+- Renders the widget
+- Provides `cf-turnstile-response` for server-side validation
+
+Prefer to embed manually? You can, but don’t include both the component and manual embed at the same time:
+
+```html
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+<div
+  class="cf-turnstile"
+  data-sitekey="{{ config('waitlist.turnstile.site_key') }}"
+  data-theme="{{ config('waitlist.turnstile.theme') }}"
+  data-size="{{ config('waitlist.turnstile.size') }}"
+  data-callback="{{ config('waitlist.turnstile.callback') }}"
+></div>
+```
+
+### 4) Server-side Verification
+
+When `CLOUDFLARE_TURNSTILE_ENABLED=true`, the package’s request validator automatically verifies the token for the built-in `POST /waitlist` route.
+
+If you use your own controller/request, add the rule yourself:
+
+```php
+use KyleRusby\LaravelWaitlist\Rules\TurnstileRule;
+
+// In a FormRequest
+public function rules(): array
+{
+    return [
+        'email' => ['required', 'email'],
+        'cf-turnstile-response' => ['required', new TurnstileRule($this->ip())],
+    ];
+}
+```
+
+Or in a controller/route closure:
+
+```php
+use Illuminate\Http\Request;
+use KyleRusby\LaravelWaitlist\Rules\TurnstileRule;
+
+Route::post('/waitlist', function (Request $request) {
+    $request->validate([
+        'email' => ['required', 'email'],
+        'cf-turnstile-response' => ['required', new TurnstileRule($request->ip())],
+    ]);
+
+    // ...store email
+});
+```
+
+Notes:
+- Tokens are single-use and valid for ~5 minutes.
+- The widget auto-populates `cf-turnstile-response` on form submit.
+
 ## Customization
 
 ### Customizing the View
