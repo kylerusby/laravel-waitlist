@@ -10,15 +10,11 @@ class TurnstileRule implements ValidationRule
 {
     /**
      * The Turnstile service instance.
-     *
-     * @var TurnstileService
      */
     protected TurnstileService $turnstile;
 
     /**
      * The visitor's IP address.
-     *
-     * @var string|null
      */
     protected ?string $remoteIp;
 
@@ -29,7 +25,7 @@ class TurnstileRule implements ValidationRule
      */
     public function __construct(?string $remoteIp = null)
     {
-        $this->turnstile = new TurnstileService();
+        $this->turnstile = new TurnstileService;
         $this->remoteIp = $remoteIp;
     }
 
@@ -41,22 +37,22 @@ class TurnstileRule implements ValidationRule
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
         // Skip validation if Turnstile is not enabled
-        if (!config('waitlist.turnstile.enabled', false)) {
+        if (! config('waitlist.turnstile.enabled', false)) {
             return;
         }
 
         // Fail if token is missing
         if (empty($value)) {
             $fail('Please complete the security challenge.');
+
             return;
         }
 
         // Verify the token with Cloudflare
         $isValid = $this->turnstile->verify($value, $this->remoteIp);
 
-        if (!$isValid) {
+        if (! $isValid) {
             $fail('Security verification failed. Please try again.');
         }
     }
 }
-

@@ -2,9 +2,9 @@
 
 namespace KyleRusby\LaravelWaitlist;
 
+use KyleRusby\LaravelWaitlist\Commands\LaravelWaitlistCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use KyleRusby\LaravelWaitlist\Commands\LaravelWaitlistCommand;
 
 class LaravelWaitlistServiceProvider extends PackageServiceProvider
 {

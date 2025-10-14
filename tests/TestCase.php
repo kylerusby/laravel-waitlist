@@ -3,8 +3,8 @@
 namespace KyleRusby\LaravelWaitlist\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Orchestra\Testbench\TestCase as Orchestra;
 use KyleRusby\LaravelWaitlist\LaravelWaitlistServiceProvider;
+use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
 {

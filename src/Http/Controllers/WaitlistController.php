@@ -28,4 +28,3 @@ class WaitlistController extends Controller
         return view('waitlist::waitlist');
     }
 }
-

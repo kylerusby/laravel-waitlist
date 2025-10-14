@@ -18,7 +18,7 @@ it('can verify a valid turnstile token', function () {
         ], 200),
     ]);
 
-    $service = new TurnstileService();
+    $service = new TurnstileService;
     $result = $service->verify('valid-token');
 
     expect($result)->toBeTrue();
@@ -32,7 +32,7 @@ it('returns false for invalid turnstile token', function () {
         ], 200),
     ]);
 
-    $service = new TurnstileService();
+    $service = new TurnstileService;
     $result = $service->verify('invalid-token');
 
     expect($result)->toBeFalse();
@@ -45,7 +45,7 @@ it('includes remote IP when provided', function () {
         ], 200),
     ]);
 
-    $service = new TurnstileService();
+    $service = new TurnstileService;
     $service->verify('valid-token', '192.168.1.1');
 
     Http::assertSent(function ($request) {
@@ -60,7 +60,7 @@ it('includes idempotency key when provided', function () {
         ], 200),
     ]);
 
-    $service = new TurnstileService();
+    $service = new TurnstileService;
     $service->verify('valid-token', null, 'test-uuid-1234');
 
     Http::assertSent(function ($request) {
@@ -71,7 +71,7 @@ it('includes idempotency key when provided', function () {
 it('returns true when turnstile is disabled', function () {
     Config::set('waitlist.turnstile.enabled', false);
 
-    $service = new TurnstileService();
+    $service = new TurnstileService;
     $result = $service->verify('any-token');
 
     expect($result)->toBeTrue();
@@ -82,7 +82,7 @@ it('returns true when turnstile is disabled', function () {
 it('returns false when secret key is not configured', function () {
     Config::set('waitlist.turnstile.secret_key', '');
 
-    $service = new TurnstileService();
+    $service = new TurnstileService;
     $result = $service->verify('any-token');
 
     expect($result)->toBeFalse();
@@ -93,7 +93,7 @@ it('handles API request failures gracefully', function () {
         'challenges.cloudflare.com/*' => Http::response('Server Error', 500),
     ]);
 
-    $service = new TurnstileService();
+    $service = new TurnstileService;
     $result = $service->verify('valid-token');
 
     expect($result)->toBeFalse();
@@ -104,7 +104,7 @@ it('handles exceptions gracefully', function () {
         throw new \Exception('Network error');
     });
 
-    $service = new TurnstileService();
+    $service = new TurnstileService;
     $result = $service->verify('valid-token');
 
     expect($result)->toBeFalse();
@@ -119,7 +119,7 @@ it('can get detailed verification result', function () {
         ], 200),
     ]);
 
-    $service = new TurnstileService();
+    $service = new TurnstileService;
     $result = $service->getVerificationResult('valid-token');
 
     expect($result)
@@ -183,4 +183,3 @@ it('does not require turnstile when disabled', function () {
 
     $response->assertSessionHasNoErrors();
 });
-

@@ -18,12 +18,11 @@ class TurnstileService
      * @param  string  $token  The Turnstile response token
      * @param  string|null  $remoteIp  The visitor's IP address (optional)
      * @param  string|null  $idempotencyKey  UUID for retry protection (optional)
-     * @return bool
      */
     public function verify(string $token, ?string $remoteIp = null, ?string $idempotencyKey = null): bool
     {
         // If Turnstile is not enabled, skip verification
-        if (!config('waitlist.turnstile.enabled', false)) {
+        if (! config('waitlist.turnstile.enabled', false)) {
             return true;
         }
 
@@ -32,6 +31,7 @@ class TurnstileService
         // If no secret key is configured, log error and fail
         if (empty($secret)) {
             Log::error('Cloudflare Turnstile secret key is not configured');
+
             return false;
         }
 
@@ -55,11 +55,12 @@ class TurnstileService
             $response = Http::asForm()->post(self::VERIFY_URL, $data);
 
             // Check if request was successful
-            if (!$response->successful()) {
+            if (! $response->successful()) {
                 Log::error('Cloudflare Turnstile API request failed', [
                     'status' => $response->status(),
                     'body' => $response->body(),
                 ]);
+
                 return false;
             }
 
@@ -78,8 +79,9 @@ class TurnstileService
         } catch (\Exception $e) {
             Log::error('Cloudflare Turnstile verification exception', [
                 'message' => $e->getMessage(),
-                'token' => substr($token, 0, 20) . '...',
+                'token' => substr($token, 0, 20).'...',
             ]);
+
             return false;
         }
     }
@@ -90,12 +92,11 @@ class TurnstileService
      * @param  string  $token  The Turnstile response token
      * @param  string|null  $remoteIp  The visitor's IP address (optional)
      * @param  string|null  $idempotencyKey  UUID for retry protection (optional)
-     * @return array
      */
     public function getVerificationResult(string $token, ?string $remoteIp = null, ?string $idempotencyKey = null): array
     {
         // If Turnstile is not enabled, return success
-        if (!config('waitlist.turnstile.enabled', false)) {
+        if (! config('waitlist.turnstile.enabled', false)) {
             return ['success' => true];
         }
 
@@ -124,7 +125,7 @@ class TurnstileService
         try {
             $response = Http::asForm()->post(self::VERIFY_URL, $data);
 
-            if (!$response->successful()) {
+            if (! $response->successful()) {
                 return [
                     'success' => false,
                     'error-codes' => ['api-request-failed'],
@@ -141,4 +142,3 @@ class TurnstileService
         }
     }
 }
-

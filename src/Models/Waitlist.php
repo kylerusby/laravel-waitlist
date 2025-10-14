@@ -32,4 +32,3 @@ class Waitlist extends Model
         'updated_at' => 'datetime',
     ];
 }
-
