@@ -65,7 +65,7 @@
 
                         <!-- Cloudflare Turnstile -->
                         <div class="mt-4 flex justify-center">
-                            <x-laravel-waitlist::turnstile />
+                            <x-waitlist::turnstile />
                         </div>
                     </form>
 

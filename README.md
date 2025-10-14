@@ -284,7 +284,7 @@ If you aren’t using the provided stub, you can include the component inside yo
     <input type="email" name="email" required>
 
     {{-- Cloudflare Turnstile --}}
-    <x-laravel-waitlist::turnstile />
+    <x-waitlist::turnstile />
 
     <button type="submit">Join Waitlist</button>
 </form>

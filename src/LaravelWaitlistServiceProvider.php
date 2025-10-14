@@ -25,6 +25,10 @@ class LaravelWaitlistServiceProvider extends PackageServiceProvider
 
     public function packageBooted(): void
     {
+        // Register a shorter alias for the package view namespace so anonymous components
+        // can be referenced using <x-waitlist::...> in addition to <x-laravel-waitlist::...>
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'waitlist');
+
         // Only register routes if enabled in config
         if (config('waitlist.enabled', true) && config('waitlist.routes.enabled', true)) {
             $this->registerRoutes();
